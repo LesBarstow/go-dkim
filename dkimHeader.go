@@ -269,7 +269,7 @@ func GetHeader(email *[]byte) (*DKIMHeader, error) {
 	var keepErr error
 	//for _, dk := range m.Header[textproto.CanonicalMIMEHeaderKey("DKIM-Signature")] {
 	for _, h := range dkHeaders {
-		parsed, err := parseDkHeader(h)
+		parsed, err := ParseDkHeader(h)
 		// if malformed dkim header try next
 		if err != nil {
 			keepErr = err
@@ -290,8 +290,8 @@ func GetHeader(email *[]byte) (*DKIMHeader, error) {
 	return keep, nil
 }
 
-// parseDkHeader parse raw dkim header
-func parseDkHeader(header string) (dkh *DKIMHeader, err error) {
+// ParseDkHeader parse raw dkim header
+func ParseDkHeader(header string) (dkh *DKIMHeader, err error) {
 	dkh = new(DKIMHeader)
 
 	keyVal := strings.SplitN(header, ":", 2)
